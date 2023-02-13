@@ -69,7 +69,6 @@ interrupt [TIM0_COMPA] void timer0_compa_isr(void)```
 
 >We initialized a timer that will refresh the digit after each count. This corresponds with the timer_0 defined in line 57.
 ```
-```
 void init_timer1(void) 
 {
 // Timer 1 initialization
