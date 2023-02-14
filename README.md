@@ -1,6 +1,22 @@
 # LED-clock-AtMega164A
 LED clock with 7-segment display, calendar and alarm using AtMega164A
 
+## Hardware description
+7 segment display
+> We chosed the approach of having common cathode. In this type of display, all the cathode connections of the LED segments are connected together to logic 0 or ground. The separate segments are lightened by applying the logic 1 or HIGH signal through a current limiting resistor to forward bias the individual anode terminals a to g. We used it to display the digits for hours and minutes (each digit is for tens of hours, hours, tens of minutes, minutes, in this order, from left to right).
+>We also used 2 common cathode single digit displays, for displaying the digits for the seconds.
+
+Resistors
+>As the voltage source of the microcontroller is greater than the voltage drop of the LEDs in the 7 – Segment Display, we needed ballast resistors to limit the current through the LEDs to prevent excess current that could have burnt them.
+>A base resistor limits the current flowing into the base of the transistor to prevent it being damaged but it must also allow sufficient base current to flow to ensure that the transistor is fully saturated when switched on. 
+
+Transistors
+>By choosing a Quad Digit 7 Segment Display, we needed to understand how they work. Those devices have 4 digit made of 7 LEDs plus an extra LED for the decimal point next to each digit. That’s a total of 32 LEDs that ATMega should be able to turn on and off independently. But if we look at a display, it has only 12 pins. How it’s that possible? Well, the digits are multiplexed. We have four common pins, one for each digit. When one of this pin is active, you have control over a single digit using 8 pin interface (7 segments + decimal point). Digits are lit sequentially, in rapid succession and perceived as being always on. Four common signals and eight segment pins gives a total of 12 pins.
+
+Push buttons
+>We used buttons for setting the clock. By pressing on the first one, the digit which represents the hour is incremented. When the second button is pressed, the same as above for the minutes. Third and forth buttons are reserved for the alarm properties of the circuit.
+
+
 ## Software description
 > Port A has analog inputs to the Analog to Digital Converter and they are 8-bit bi-directional input/output port if the A/D converter is not used.
 We connected the A-G pins that correspond to the leds of the 7 segment(both 4x7 segment and single 7segment). These connections were made in series with a 1.6 KΩ resistors for each connection to protect the leds by limiting the current. 
@@ -12,6 +28,7 @@ DDRA=(1<<DDA7) | (1<<DDA6) | (1<<DDA5) | (1<<DDA4) | (1<<DDA3) | (1<<DDA2) | (1<
 
 ```
  >Port B are 8-bit bi-directional input/output port. We use it to initialize the push buttons that modify the minutes, hours and enters in the alarm mode.
+ 
 ```
 // Port B initialization
 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In 
